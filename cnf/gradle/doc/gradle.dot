@@ -106,7 +106,6 @@ digraph GradleSetup {
   classes       -> bundle        [color=blue]
   cleanBnd      -> cleanNeeded   [color=blue]
   bundle        -> jar           [color=blue, style=dashed]
-  bundle        -> bundle        [color=red, style=dashed]
   bundle        -> compileJava   [color=red, style=dashed]
   releaseNeeded -> releaseNeeded [color=red, style=dashed]
   exportNeeded  -> exportNeeded  [color=red, style=dashed]
