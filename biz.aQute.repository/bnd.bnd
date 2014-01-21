@@ -1,5 +1,7 @@
 Bundle-Version: 2.1.0.${tstamp;yyyyMMdd-HHmmss}_${Git-Descriptor}
 
+-sources: true
+
 jetty.libs: lib/javax.servlet-2.5.0.jar;version=file,\
 	lib/jetty-continuation-7.6.3.v20120416.jar;version=file,\
 	lib/jetty-http-7.6.3.v20120416.jar;version=file,\
