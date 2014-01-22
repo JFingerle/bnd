@@ -8,6 +8,7 @@ import aQute.bnd.service.*;
 import aQute.bnd.service.url.*;
 import aQute.lib.hex.*;
 import aQute.lib.io.*;
+import aQute.lib.settings.*;
 import aQute.service.reporter.*;
 
 /**
@@ -54,6 +55,12 @@ public class CachingUriResourceHandle implements ResourceHandle {
 	static final String HTTP_SCHEME = "http";
 	static final String	HTTP_PREFIX	= HTTP_SCHEME + ":";
 	static final String	UTF_8		= "UTF-8";
+	
+	//Constant for the offline mode setting stored in ~/.bnd/settings.json
+	static final String PREF_OFFLINE_MODE = "offlineMode";
+	
+	//Constant for the offline mode environment variable
+	static final String ENV_OFFLINE_MODE = "bndtools.offlinemode";
 
 	final File			cacheDir;
 	final URLConnector	connector;
@@ -182,9 +189,14 @@ public class CachingUriResourceHandle implements ResourceHandle {
 		if (cacheValidated)
 			return cachedFile;
 		
-		// Check if offline mode is enabled
-		String value = System.getenv("bndtools.offlinemode");
-		if (value != null && value.equals("true")) {
+		// Check if offline mode is enabled (setting or environment variable)
+		Settings settings = new Settings();
+		String offlineModeSetting = settings.get(PREF_OFFLINE_MODE);
+		if (offlineModeSetting != null && offlineModeSetting.equals("true")) {
+			return null;
+		}
+		String offlineModeEnv = System.getenv(ENV_OFFLINE_MODE);
+		if (offlineModeEnv != null && offlineModeEnv.equals("true")) {
 			return null;
 		}
 
