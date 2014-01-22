@@ -181,6 +181,12 @@ public class CachingUriResourceHandle implements ResourceHandle {
 
 		if (cacheValidated)
 			return cachedFile;
+		
+		// Check if offline mode is enabled
+		String value = System.getenv("bndtools.offlinemode");
+		if (value != null && value.equals("true")) {
+			return null;
+		}
 
 		try {
 			InputStream data = connector.connect(url);
